@@ -29,7 +29,11 @@ import {
     faPhone,
     faEnvelope,
     faLock,
-    faUser as fasUser
+    faUser as fasUser,
+    faDollarSign,
+    faStore,
+    faMoneyBill,
+    faCreditCard as fasCreditCard
 } from "@fortawesome/free-solid-svg-icons"
 
 // Regular
@@ -55,7 +59,11 @@ library.add({
     faPhone,
     faEnvelope,
     faLock,
-    fasUser
+    fasUser,
+    faDollarSign,
+    faStore,
+    faMoneyBill,
+    fasCreditCard
 })
 
 createApp(App)

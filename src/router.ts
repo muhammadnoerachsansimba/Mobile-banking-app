@@ -3,6 +3,7 @@ import Home from "@/views/Home.vue"
 import AddCard from "@/views/AddCard.vue"
 import CreateAccount from "@/views/CreateAccount.vue"
 import CardDetail from "@/views/CardDetail.vue"
+import Send from '@/views/Send.vue'
 
 const routes = [
     {
@@ -20,6 +21,10 @@ const routes = [
     {
         path: '/card_detail/:id',
         component: CardDetail
+    },
+    {
+        path: '/send',
+        component: Send
     }
 ]
 
