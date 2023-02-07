@@ -1,6 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router"
-import Home from "./views/Home.vue"
-import CardDetail from "./views/CardDetail.vue"
+import Home from "@/views/Home.vue"
+import AddCard from "@/views/AddCard.vue"
+import CreateAccount from "@/views/CreateAccount.vue"
+import CardDetail from "@/views/CardDetail.vue"
 
 const routes = [
     {
@@ -8,8 +10,12 @@ const routes = [
         component: Home
     },
     {
-        path: '/card_detail',
-        component: CardDetail
+        path: '/add_card',
+        component: AddCard
+    },
+    {
+        path: '/create_account/:id',
+        component: CreateAccount
     },
     {
         path: '/card_detail/:id',
@@ -18,6 +24,7 @@ const routes = [
 ]
 
 const router = createRouter({
+    linkActiveClass: "active",
     history: createWebHistory(),
     routes
 })

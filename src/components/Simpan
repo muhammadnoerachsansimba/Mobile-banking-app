@@ -1,0 +1,79 @@
+<div>
+    <Card>
+        <template v-slot:card-header>
+            <Title>
+                <template v-slot:left-title>
+                    <p class="text-md">Ultra green</p>
+                </template>
+                <template v-slot:right-title>
+                    <font-awesome-icon icon="fa-solid fa-gear" class="text-xs px-2 py-2 bg-[#ffffff4b] rounded-full hover:bg-[#ffffff7c] cursor-pointer" />
+                </template>
+            </Title>
+        </template>
+
+        <template v-slot:card-body>
+            <Title>
+                <template v-slot:left-title>
+                    <p>
+                        <span class="font-extralight text-sm">Balance</span><br>
+                        <span class="font-bold text-xl">$815,75</span>
+                    </p>
+                </template>
+            </Title>
+        </template>
+
+        <template v-slot:card-footer>
+            <Title>
+                <template v-slot:left-title>
+                    <p>
+                        <span class="font-extrabold text-lg tracking-[.15em]">....</span>
+                        <span class="font-light text-sm">4592</span>
+                    </p>
+                </template>
+                <template v-slot:right-title>
+                    <img src="../assets/img/card_logo/master_card.png" alt="master card logo" class="w-11 h-fit">
+                </template>
+            </Title>
+        </template>
+    </Card>
+</div>
+
+<div>
+    <Card>
+        <template v-slot:card-header>
+            <Title>
+                <template v-slot:left-title>
+                    <p class="text-md">Standard</p>
+                </template>
+                <template v-slot:right-title>
+                    <font-awesome-icon icon="fa-solid fa-gear" class="text-xs px-2 py-2 bg-[#ffffff4b] rounded-full hover:bg-[#ffffff7c] cursor-pointer" />
+                </template>
+            </Title>
+        </template>
+
+        <template v-slot:card-body>
+            <Title>
+                <template v-slot:left-title>
+                    <p>
+                        <span class="font-extralight text-sm">Balance</span><br>
+                        <span class="font-bold text-xl">$3500,75</span>
+                    </p>
+                </template>
+            </Title>
+        </template>
+
+        <template v-slot:card-footer>
+            <Title>
+                <template v-slot:left-title>
+                    <p>
+                        <span class="font-extrabold text-lg tracking-[.15em]">....</span>
+                        <span class="font-light text-sm">4290</span>
+                    </p>
+                </template>
+                <template v-slot:right-title>
+                    <img src="../assets/img/card_logo/visa.png" alt="visa card logo" class="w-11 h-fit">
+                </template>
+            </Title>
+        </template>
+    </Card>
+</div>

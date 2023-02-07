@@ -1,8 +1,23 @@
-<script setup lang="ts">
-    import NavbarMenu from "../components/NavbarMenu.vue"
-    import Title from "../components/Title.vue"
-    import Card from "../components/Card.vue"
-    import History from "../components/History.vue"
+<script lang="ts" setup>
+    import NavbarMenu from "@/components/NavbarMenu.vue"
+    import Title from "@/components/Title.vue"
+    import Card from "@/components/Card.vue"
+    import History from "@/components/History.vue"
+    import { AccountModel } from "@/models/AccountModel"
+    import { Ref, ref } from "vue"
+
+    let account: AccountModel = new AccountModel
+    const data = ref()
+
+    async function getAllData() {
+        try {
+            data.value = await account.getAll()
+        } catch(error) {
+            console.log(error)
+        }
+    }
+
+    getAllData()
 </script>
 
 <template>
@@ -20,96 +35,67 @@
                         <h1 class="text-xl cursor-default px-5 py-5 font-semibold">My Cards</h1>
                     </template>
                     <template v-slot:right-title>
-                        <font-awesome-icon icon="fa-regular fa-bell" class="text-lg cursor-pointer px-5 py-5 font-semibold" />
+                        <font-awesome-icon icon="fa-regular fa-bell" class="text-lg cursor-pointer px-5 py-5 font-semibold text-emerald-500" />
                     </template>
                 </Title>
             </div>
         </header>
 
         <main class="mb-24">
-            <div class="cards flex overflow-x-scroll scrollbar-hide">
-                <div>
-                    <Card>
-                        <template v-slot:card-header>
-                            <Title>
-                                <template v-slot:left-title>
-                                    <p class="text-md">Ultra green</p>
-                                </template>
-                                <template v-slot:right-title>
-                                    <font-awesome-icon icon="fa-solid fa-gear" class="text-xs px-2 py-2 bg-[#ffffff4b] rounded-full hover:bg-[#ffffff7c] cursor-pointer" />
-                                </template>
-                            </Title>
-                        </template>
-            
-                        <template v-slot:card-body>
-                            <Title>
-                                <template v-slot:left-title>
-                                    <p>
-                                        <span class="font-extralight text-sm">Balance</span><br>
-                                        <span class="font-bold text-xl">$815,75</span>
-                                    </p>
-                                </template>
-                            </Title>
-                        </template>
-            
-                        <template v-slot:card-footer>
-                            <Title>
-                                <template v-slot:left-title>
-                                    <p>
-                                        <span class="font-extrabold text-lg tracking-[.15em]">....</span>
-                                        <span class="font-light text-sm">4592</span>
-                                    </p>
-                                </template>
-                                <template v-slot:right-title>
-                                    <img src="../assets/img/card_logo/master_card.png" alt="master card logo" class="w-11 h-fit">
-                                </template>
-                            </Title>
-                        </template>
-                    </Card>
-                </div>
+            <div class="cards flex overflow-x-scroll scrollbar-hide scrollbar-none">
+                <div v-for="value in data" :key="value.id">
+                    <div class="Card mx-5">
+                        <div class="Card flex justify-between px-6 py-6 w-96 h-52 max-h-52 rounded-lg" :class="value.color">
+                            <Card>
+                                <template #card-header>
+                                    <Title>
+                                        <template #left-title>Standard</template>
 
-                <div>
-                    <Card>
-                        <template v-slot:card-header>
-                            <Title>
-                                <template v-slot:left-title>
-                                    <p class="text-md">Standard</p>
+                                        <template #right-title>
+                                            <router-link to="/">
+                                                <font-awesome-icon icon="fa-solid fa-gear" class="bg-[#0000002c] text-sm rounded-full px-2 py-2" />
+                                            </router-link>
+                                        </template>
+                                    </Title>
                                 </template>
-                                <template v-slot:right-title>
-                                    <font-awesome-icon icon="fa-solid fa-gear" class="text-xs px-2 py-2 bg-[#ffffff4b] rounded-full hover:bg-[#ffffff7c] cursor-pointer" />
-                                </template>
-                            </Title>
-                        </template>
-            
-                        <template v-slot:card-body>
-                            <Title>
-                                <template v-slot:left-title>
-                                    <p>
-                                        <span class="font-extralight text-sm">Balance</span><br>
-                                        <span class="font-bold text-xl">$3500,75</span>
-                                    </p>
-                                </template>
-                            </Title>
-                        </template>
-            
-                        <template v-slot:card-footer>
-                            <Title>
-                                <template v-slot:left-title>
-                                    <p>
-                                        <span class="font-extrabold text-lg tracking-[.15em]">....</span>
-                                        <span class="font-light text-sm">4290</span>
-                                    </p>
-                                </template>
-                                <template v-slot:right-title>
-                                    <img src="../assets/img/card_logo/visa.png" alt="visa card logo" class="w-11 h-fit">
-                                </template>
-                            </Title>
-                        </template>
-                    </Card>
-                </div>
 
+                                <template #card-body>
+                                    <Title>
+                                        <template #left-title>
+                                            <p>
+                                                <span class="font-extralight text-sm">Balance</span><br>
+                                                <span class="font-medium text-2xl">${{ new Intl.NumberFormat().format(value.amount) }}</span>
+                                            </p>
+                                        </template>
+                                    </Title>
+                                </template>
+
+                                <template #card-footer>
+                                    <Title>
+                                        <template #left-title>
+                                            <p>
+                                                <span class="font-extrabold text-lg tracking-[.35rem]">....</span>
+                                                <span class="font-light">{{ value.phone.substring(value.phone.length - 4) }}</span>
+                                            </p>
+                                        </template>
+
+                                        <template #right-title>
+                                            <img src="@/assets/img/card_logo/master_card.png" alt="" class="w-11 h-fit" v-if="value.payment_system == 'Mastercard'">
+                                            <img src="@/assets/img/card_logo/visa.png" alt="" class="w-11 h-fit" v-else-if="value.payment_system == 'VISA'">
+                                            <img src="@/assets/img/card_logo/american_express.jpg" alt="" class="w-11 h-fit" v-else>
+                                        </template>
+                                    </Title>
+                                </template>
+                            </Card>
+                        </div>
+                    </div>
+                </div>
                 <div>
-                    <Card></Card>
+                    <div class="Card mx-5">
+                        <div class="Card flex justify-between px-5 py-5 w-96 h-52 max-h-52 rounded-lg bg-zinc-100 border-2 border-emerald-500 border-dashed">
+                            <Card></Card>
+                        </div>
+                    </div>
                 </div>
             </div>
     
@@ -228,4 +214,12 @@
 </template>
 
 <style scoped>
+    .scrollbar-none::-webkit-scrollbar {
+        display: none;
+    }
+
+    .scrollbar-none {
+        -ms-overflow-style: none;  /* IE and Edge */
+        scrollbar-width: none; 
+    }
 </style>
