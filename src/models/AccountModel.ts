@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-export class AccountModel{
+export class AccountModel {
     async getAll() {
         try {
             const response = await axios.get("http://localhost:4500/getall_account")
@@ -11,10 +11,24 @@ export class AccountModel{
     }
     
     async createAccount(data: any) {
-        let formData: FormData = new FormData
+        const formData: FormData = new FormData
+        let card_name: string
+        let color: string
+
+        if(data.target.id_card.value == '1') {
+            card_name = "Standard"
+            color = "bg-gradient-to-tl from-[#F3D5A3] via-[#D5A3F3] to-[#D5A3F3] text-white border-none"
+        } else if(data.target.id_card.value == '2') {
+            card_name = "Space grey"
+            color = "bg-gradient-to-bl from-[#3D3D3D] via-[#555555] to-[#9E9E9E] text-white border-none"
+        } else {
+            card_name = "Ultra green"
+            color = "bg-gradient-to-br from-emerald-900 via-emerald-700 to-emerald-500 text-white border-none"
+        }
 
         let dataAccount: any = {
             id_card: data.target.id_card.value,
+            card_name: card_name,
             name: data.target.name.value,
             birthplace: data.target.birthplace.value,
             birth_date: data.target.birth_date.value,
@@ -25,6 +39,7 @@ export class AccountModel{
             password: data.target.password.value,
             card_type: data.target.card_type.value,
             payment_system: data.target.payment_system.value,
+            color: color,
             created_at: new Date()
         }
         let accountData = JSON.stringify(dataAccount)

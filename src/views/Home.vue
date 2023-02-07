@@ -45,11 +45,11 @@
             <div class="cards flex overflow-x-scroll scrollbar-hide scrollbar-none">
                 <div v-for="value in data" :key="value.id">
                     <div class="Card mx-5">
-                        <div class="Card flex justify-between px-6 py-6 w-96 h-52 max-h-52 rounded-lg" :class="value.color">
+                        <div class="Card flex justify-between px-5 py-5 w-96 h-52 max-h-52 rounded-lg" :class="value.color">
                             <Card>
                                 <template #card-header>
                                     <Title>
-                                        <template #left-title>Standard</template>
+                                        <template #left-title>{{ value.card_name }}</template>
 
                                         <template #right-title>
                                             <router-link to="/">

@@ -12,7 +12,7 @@
         </div>
 
         <div class="navbar-item text-center text-zinc-500">
-            <router-link to="/add_card">
+            <router-link to="/send">
                 <font-awesome-icon icon="fa-solid fa-arrow-trend-up" />
                 <p class="text-center">Send</p>
             </router-link>
