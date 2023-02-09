@@ -1,6 +1,6 @@
-const {get, getById, insert, update} = require('../models/accountModel.js');
+const {get, getById, insert} = require('../models/transactionModel.js');
 
-const getAll = async(req, res) => {
+const getAllTransaction = async(req, res) => {
     get((err, result) => {
         if(err) {
             console.log(err)
@@ -10,7 +10,7 @@ const getAll = async(req, res) => {
     })
 }
 
-const getAccount = async(req, res) => {
+const getTransaction = async(req, res) => {
     const id = req.params.id
     getById(id, (err, result) => {
         if(err) {
@@ -21,7 +21,7 @@ const getAccount = async(req, res) => {
     })
 }
 
-const createAccount = async(req, res) => {
+const send = async(req, res) => {
     const data = req.body;
     insert(JSON.parse(data.data), (err, result) => {
         if (err) {
@@ -33,16 +33,4 @@ const createAccount = async(req, res) => {
     console.log(data);
 }
 
-const editAccount = async(req, res) => {
-    const data = req.body
-    const id = req.params.id
-    update(JSON.parse(data.dataCard), id, (err, result) => {
-        if(err) {
-            console.log(err)
-        } else {
-            res.json(result)
-        }
-    })
-}
-
-module.exports = {getAll, getAccount, createAccount, editAccount}
+module.exports = {getAllTransaction, getTransaction, send};

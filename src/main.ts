@@ -33,7 +33,8 @@ import {
     faDollarSign,
     faStore,
     faMoneyBill,
-    faCreditCard as fasCreditCard
+    faCreditCard as fasCreditCard,
+    faQuoteLeft
 } from "@fortawesome/free-solid-svg-icons"
 
 // Regular
@@ -63,7 +64,8 @@ library.add({
     faDollarSign,
     faStore,
     faMoneyBill,
-    fasCreditCard
+    fasCreditCard,
+    faQuoteLeft
 })
 
 createApp(App)

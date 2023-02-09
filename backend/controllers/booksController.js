@@ -25,7 +25,7 @@ const getBooks = async (req, res) => {
 }
 
 const getBooksById = async (req, res) => {
-    const id = req.params.id;
+    const id = req.params.id
     getById(id, (err, result) => {
         if (err) {
             console.log(err);

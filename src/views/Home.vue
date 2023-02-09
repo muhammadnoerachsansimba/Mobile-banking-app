@@ -4,14 +4,18 @@
     import Card from "@/components/Card.vue"
     import History from "@/components/History.vue"
     import { AccountModel } from "@/models/AccountModel"
+    import { TransactionModel } from "@/models/TransactionModel"
     import { Ref, ref } from "vue"
 
     let account: AccountModel = new AccountModel
+    const transaction = new TransactionModel
     const data = ref()
+    const transactions = ref()
 
     async function getAllData() {
         try {
             data.value = await account.getAll()
+            transactions.value = await transaction.getAll()
         } catch(error) {
             console.log(error)
         }
@@ -134,77 +138,19 @@
                         </template>
                     </Title>
     
-                    <History>
+                    <History v-for="trans in transactions" :key="trans.id">
                         <template v-slot:history-detail>
-                            <div class="w-12 h-12 overflow-hidden rounded-full">
-                                <img src="../assets/img/company_logo/starbucks.png" alt="Starbucks Logo">
+                            <div class="w-12 h-12 overflow-hidden rounded-full bg-zinc-300">
                             </div>
     
                             <p class="ml-5">
-                                <span class="font-medium">Starbucks</span><br>
-                                <span class="font-light text-sm text-zinc-500">Restaurant</span>
+                                <span class="font-medium">{{trans.recipient_name}}</span><br>
+                                <span class="font-light text-sm text-zinc-500"> - </span>
                             </p>
                         </template>
     
                         <template v-slot:history-nominal>
-                            <p class="font-medium text-xl py-2">-$6,30</p>
-                        </template>
-                    </History>
-    
-                    <History>
-                        <template v-slot:history-detail>
-                            <div class="w-12 h-12 overflow-hidden rounded-full">
-                                <img src="../assets/img/company_logo/starbucks.png" alt="Starbucks Logo">
-                            </div>
-                            <p class="ml-5">
-                                <span class="font-medium">Starbucks</span><br>
-                                <span class="font-light text-sm text-zinc-500">Restaurant</span>
-                            </p>
-                        </template>
-    
-                        <template v-slot:history-nominal>
-                            <p class="font-medium text-xl py-2">-$15,30</p>
-                        </template>
-                    </History>
-                </div>
-    
-                <div>
-                    <Title class="px-5">
-                        <template v-slot:left-title>
-                            <p class="font-semibold text-md py-1.5 text-zinc-400">Yesterday</p>
-                        </template>
-                    </Title>
-    
-                    <History>
-                        <template v-slot:history-detail>
-                            <div class="w-12 h-12 overflow-hidden rounded-full">
-                                <img src="../assets/img/company_logo/morris.png" alt="Morris Logo">
-                            </div>
-    
-                            <p class="ml-5">
-                                <span class="font-medium">Morris</span><br>
-                                <span class="font-light text-sm text-zinc-500">Dealer</span>
-                            </p>
-                        </template>
-    
-                        <template v-slot:history-nominal>
-                            <p class="font-medium text-xl py-2">-$2000,30</p>
-                        </template>
-                    </History>
-    
-                    <History>
-                        <template v-slot:history-detail>
-                            <div class="w-12 h-12 overflow-hidden rounded-full">
-                                <img src="../assets/img/company_logo/starbucks.png" alt="Starbucks Logo">
-                            </div>
-                            <p class="ml-5">
-                                <span class="font-medium">Starbucks</span><br>
-                                <span class="font-light text-sm text-zinc-500">Restaurant</span>
-                            </p>
-                        </template>
-    
-                        <template v-slot:history-nominal>
-                            <p class="font-medium text-xl py-2">-$15,30</p>
+                            <p class="font-medium text-xl py-2">-${{ new Intl.NumberFormat().format(trans.payment) }}</p>
                         </template>
                     </History>
                 </div>

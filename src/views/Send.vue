@@ -4,11 +4,14 @@
     import Card from "@/components/Card.vue"
     import InputIcon from '@/components/InputIcon.vue'
     import { AccountModel } from "@/models/AccountModel"
+    import { TransactionModel } from '@/models/TransactionModel'
     import { Ref, ref } from "vue"
 
     let account: AccountModel = new AccountModel
+    let transaction: TransactionModel = new TransactionModel
     const data = ref()
     const id_card: Ref<number> = ref(0)
+    const money: Ref<number> = ref(0)
 
     async function getAllData() {
         try {
@@ -18,8 +21,9 @@
         }
     }
 
-    async function chooseCard(id: number) {
+    async function chooseCard(id: number, amount: number) {
         id_card.value = id
+        money.value = amount
     }
 
     getAllData()
@@ -52,7 +56,7 @@
             <div class="cards flex overflow-x-scroll scrollbar-hide scrollbar-none">
                 <div v-for="value in data" :key="value.id">
                     <div class="Card mx-5">
-                        <div class="Card flex justify-between px-5 py-5 w-96 h-52 max-h-52 rounded-lg" :class="id_card == value.id ? 'border-2 border-zinc-300 bg-zinc-200' : value.color" @click="chooseCard(value.id)">
+                        <div class="Card flex justify-between px-5 py-5 w-96 h-52 max-h-52 rounded-lg" :class="id_card == value.id ? 'border-2 border-zinc-300 bg-zinc-200' : value.color" @click="chooseCard(value.id, value.amount)">
                             <Card>
                                 <template #card-header>
                                     <Title>
@@ -100,8 +104,9 @@
             </div>
 
             <div class="form my-5 px-5">
-                <form @submit.prevent="" class="space-y-5">
+                <form @submit.prevent="transaction.send" class="space-y-5">
                     <input type="hidden" name="id_card" id="id_card" :value="id_card">
+                    <input type="hidden" name="amount" id="amount" :value="money">
 
                     <InputIcon>
                         <template #icon>
@@ -119,7 +124,7 @@
                         </template>
 
                         <template #form-input>
-                            <input type="text" name="account_number" id="account_number" class="w-full focus:outline-none" placeholder="Enter recipient name...">
+                            <input type="text" name="recipient_name" id="recipient_name" class="w-full focus:outline-none" placeholder="Enter recipient name...">
                         </template>
                     </InputIcon>
 
@@ -130,6 +135,16 @@
 
                         <template #form-input>
                             <input type="text" name="payment" id="payment" class="w-full focus:outline-none" placeholder="Enter delivery amount...">
+                        </template>
+                    </InputIcon>
+
+                    <InputIcon>
+                        <template #icon>
+                            <font-awesome-icon icon="fa-solid fa-quote-left" />
+                        </template>
+
+                        <template #form-input>
+                            <input type="text" name="description" id="description" class="w-full focus:outline-none" placeholder="Enter description...">
                         </template>
                     </InputIcon>
 

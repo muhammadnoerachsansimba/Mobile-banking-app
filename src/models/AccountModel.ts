@@ -9,6 +9,15 @@ export class AccountModel {
             console.log(error)
         }
     }
+
+    async getById(id: string) {
+        try {
+            const response = await axios.get(`http://localhost:4500/get_account/${id}`)
+            return response.data
+        } catch(error) {
+            console.log(error)
+        }
+    }
     
     async createAccount(data: any) {
         const formData: FormData = new FormData
@@ -26,7 +35,7 @@ export class AccountModel {
             color = "bg-gradient-to-br from-emerald-900 via-emerald-700 to-emerald-500 text-white border-none"
         }
 
-        let dataAccount: any = {
+        let dataAccount = {
             id_card: data.target.id_card.value,
             card_name: card_name,
             name: data.target.name.value,
